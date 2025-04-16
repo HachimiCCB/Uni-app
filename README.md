@@ -7,6 +7,7 @@ Greetings!
 ## 当前进度预览
 
 以下是当前开发进度的预览图：
+关注千早爱音喵 关注anon tokyo谢谢喵
 
 <p align="center">
   <img src="./info/info1.png" width="150">
