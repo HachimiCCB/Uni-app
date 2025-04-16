@@ -2,23 +2,10 @@
     <view class="cook" :style="{ height: cookHeight - 55 + 'px' }">
         <view class="cook-view">
             <view class="tag-filter">
-                <view class="touhou-tag" @click="openModel('like')">喜爱</view>
-                <uv-scroll-list class="tag-scroll" :indicator="false" >
-                    <view class="touhou-tag" v-for="item in cookFilter" :key="item" @click="chooseTagFilter('like', item)">{{ item }}<view class="touhou-tag-select"></view></view>
-                </uv-scroll-list>
-                <view class="touhou-tag" @click="clear('like')" v-if="cookFilter.size > 0">清空</view>
+                <view class="touhou-tag">喜爱</view>
             </view>
             <view class="tag-filter">
-                <view class="touhou-notag-left" @click="openModel('dislike')">厌恶</view>
-                <uv-scroll-list class="tag-scroll" :indicator="false" >
-                    <view class="touhou-notag-left" v-for="item in cookNoTagFilter" :key="item" @click="chooseTagFilter('dislike', item)">{{ item }}<view class="touhou-notag-left-select"></view></view>
-                </uv-scroll-list>
-                <view class="touhou-tag" @click="clear('dislike')" v-if="cookNoTagFilter.size > 0">清空</view>
-            </view>
-            <view class="cooker-select">
-                <uv-checkbox-group v-model="cookerValue" placement="row" labelColor="#e6b4a6" labelSize="16px" activeColor="#8d6549" inactiveColor="#fbefcb" @change="selectCooker">
-                    <uv-checkbox v-for="(item, index) in cookerList" :key="index" :label="item.name" :name="item.value" ></uv-checkbox>
-                </uv-checkbox-group>
+                <view class="touhou-notag-left">厌恶</view>
             </view>
             <view class="cook-total">
                 <view class="cook-total-view" style="width: 50%;">
@@ -32,39 +19,8 @@
                 </view>
             </view>
         </view>
-		<cook-view :type="'cook'" :cookShow="cookShow" :cookFilter="cookFilter"></cook-view>
         
-        <uv-modal ref="tagModal" :showConfirmButton="false">
-            <view class="modal-div">
-                <view class="modal-div-tag" v-if="chooseItem.type === 'like'">
-                    <view class="touhou-tag" v-for="item in chooseItem.value" :key="item" @click="chooseTagFilter(chooseItem.type, item)">{{ item }}<view v-if="cookFilter.has(item)" class="touhou-tag-select"></view></view>
-                </view>
-                <view class="modal-div-tag" v-if="chooseItem.type === 'dislike'">
-                    <view class="touhou-notag-left" v-for="item in chooseItem.value" :key="item" @click="chooseTagFilter(chooseItem.type, item)">{{ item }}<view v-if="cookNoTagFilter.has(item)" class="touhou-notag-left-select"></view></view>
-                </view>
-                <view class="modal-div-tag" v-if="chooseItem.type === 'material'">
-                    <view class="material-div">
-                        <view class="matrial-tag">
-                            <view class="drink-tag" v-for="item in materialTags" :key="item" @click="selectMaterialTag(item)">{{ item }}<view v-if="materialTagsFilter.has(item)" class="drink-tag-select"></view></view>
-                        </view>
-                        <view class="matrial-div-div">
-                            <view class="material-item" v-for="item in chooseItem.value" :key="item" @click="chooseTagFilter(chooseItem.type, item.chinese)">
-                                <view class="material-item-left">
-                                    <image :src="'/static/img/material/' + item.name + '.png'" style="width: 50px; height: 50px;" mode="scaleToFill" lazy-load="true"/>
-                                </view>
-                                <view class="material-item-middle">
-                                    <view>{{ item.chinese }} ￥{{ item.money }} - Lv {{ item.level }}</view>
-                                    <view class="material-item-middle-tag" v-if="!!item.tag">
-                                        <view class="drink-tag" v-for="tag in item.tag.split(',')" :key="tag">{{ tag.trim() }}<view v-if="materialTagsFilter.has(tag.trim())" class="drink-tag-select"></view></view>
-                                    </view>
-                                </view>
-                                <view class="material-item-right" v-show="materialsFilter.has(item.chinese)"></view>
-                            </view>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </uv-modal>
+        
     </view>
 	<tab-bar :selected="1"></tab-bar>
 </template>
@@ -224,27 +180,6 @@
     
     const tagModal = ref(false)
     const chooseItem = ref('')
-    const openModel = (item) => {
-        chooseItem.value = ''
-        materialTagsFilter.value.clear()
-        if ('like' === item) {
-            chooseItem.value = {
-                "type": item,
-                "value": cookTags.value
-            }
-        } else if ('dislike' === item) {
-            chooseItem.value = {
-                "type": item,
-                "value": cookNoTags.value
-            }
-        } else if ('material' === item) {
-            chooseItem.value = {
-                "type": item,
-                "value": materials.value
-            }
-        }
-        tagModal.value.open()
-    }
     const clear = (type) => {
         if ('like' === type) {
             cookFilter.value.clear()

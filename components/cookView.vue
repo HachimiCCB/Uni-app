@@ -1,4 +1,9 @@
 <template>
+	<view class="cook-div">
+	    <view class="cook-div-cook" v-for="item in props.cookShow" :key="item.chinese">
+			<cook-bar :type="props.type" :cookItem="item" :cookFilter="cookFilter"></cook-bar>
+	    </view>
+	</view>
 </template>
 
 <script setup>
