@@ -13,6 +13,27 @@
 					<!-- 待修改 -->
             </view>
         </view>
+		
+		<view class="npc-item-tab" :style="{ height: swiperHeight - 150 + 'px' }">
+			<uv-tabs :list="tabList" :current="tabName" @click="clickTab" :scrollable="false"></uv-tabs>
+			<swiper circular :current="tabName" :autoplay="false" @change="e => {tabName = e.detail.current}" :style="{ height: swiperHeight - 200 + 'px' }">
+				<swiper-item>
+					<view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
+						<view class="npc-item-tab-div-drinks-tag">
+							<view class="drink-tag" v-for="item in npc.drinks.split(',')" :key="item" @click="filterDrinks(item.trim())">
+								 • {{ item.trim() }}
+								 <view v-if="drinksFilter.has(item.trim())" class="drink-tag-select"></view>
+							</view>
+						</view>
+						<view class="npc-item-tab-div-recommend-cook" :style="{ height: swiperHeight - 280 + 'px' }">
+							<view class="npc-item-tab-div-cook-div-cook" v-for="item in npcDrinks" :key="item.name">
+								<cook-bar :type="'drink'" :isRecommand="false" :cookItem="item" :cookFilter="drinksFilter"></cook-bar>
+							</view>
+						</view>
+					</view>
+				</swiper-item>
+			</swiper>
+		</view>
     </view>
 </template>
 
@@ -33,9 +54,9 @@
 	})
     
     const tabList = ref([
-        {name: '推荐'},
-        {name: '烹饪'},
         {name: '饮料'},
+        {name: '烹饪'},
+        {name: '推荐'},
         {name: '符卡'},
         {name: '羁绊'},
     ])
