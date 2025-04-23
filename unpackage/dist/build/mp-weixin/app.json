@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/npc",
+    "pages/npcItem",
+    "pages/drinks",
+    "pages/cook",
+    "pages/setting"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#8D6549",
+    "backgroundColor": "#8D6549"
+  },
+  "tabBar": {
+    "color": "#8D6549",
+    "selectedColor": "#8D6549",
+    "borderStyle": "black",
+    "backgroundColor": "#8D6549",
+    "list": [
+      {
+        "pagePath": "pages/npc",
+        "iconPath": "/static/img/common/npc-1.png",
+        "selectedIconPath": "/static/img/common/npc-0.png",
+        "text": "sss"
+      },
+      {
+        "pagePath": "pages/cook",
+        "iconPath": "/static/img/common/food-1.png",
+        "selectedIconPath": "/static/img/common/food-0.png",
+        "text": ""
+      },
+      {
+        "pagePath": "pages/drinks",
+        "iconPath": "/static/img/common/drinks-1.png",
+        "selectedIconPath": "/static/img/common/drinks-0.png",
+        "text": ""
+      },
+      {
+        "pagePath": "pages/setting",
+        "iconPath": "/static/img/common/setting-1.png",
+        "selectedIconPath": "/static/img/common/setting-0.png",
+        "text": ""
+      }
+    ]
+  },
+  "usingComponents": {}
+}

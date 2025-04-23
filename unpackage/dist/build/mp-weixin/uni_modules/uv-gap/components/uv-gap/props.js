@@ -1,0 +1,1 @@
+"use strict";var r,t;const e=require("../../../../common/vendor.js"),o={props:{bgColor:{type:String,default:"transparent"},height:{type:[String,Number],default:20},marginTop:{type:[String,Number],default:0},marginBottom:{type:[String,Number],default:0},...null==(t=null==(r=e.index.$uv)?void 0:r.props)?void 0:t.gap}};exports.props=o;
