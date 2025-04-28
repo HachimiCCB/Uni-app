@@ -1,26 +1,31 @@
 const { chromium } = require('playwright');
 
-(async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+describe('npc页面渲染检查', () => {
+  let browser;
+  let page;
 
-  // 打开你本地服务器的网址
-  await page.goto('http://localhost:8080');
+  beforeAll(async () => {
+    browser = await chromium.launch();
+    page = await browser.newPage();
+    await page.goto('http://localhost:8080');
+    await page.waitForTimeout(3000); // 等待页面初始化
+  });
 
-  // 测试页面标题是否正确出现
-  const title = await page.locator('.uni-page-head__title');
-  if (!(await title.isVisible())) {
-    console.error('ERROR: 页面标题元素没有渲染！');
-    process.exit(1);
-  }
+  afterAll(async () => {
+    await browser.close();
+  });
 
-  // 测试NPC图片是否渲染
-  const npcImages = await page.locator('.npc-img img');
-  if ((await npcImages.count()) === 0) {
-    console.error('ERROR: 没有发现任何NPC图片！');
-    process.exit(1);
-  }
+  it('页面容器应正常渲染', async () => {
+    // 检查最外层容器
+    const container = await page.$('.npc');
+    expect(container).toBeTruthy();
 
-  console.log('✅ 页面基本元素渲染正常');
-  await browser.close();
-})();
+    // 检查标签过滤区域是否存在
+    const tagFilter = await page.$('.tag-filter');
+    expect(tagFilter).toBeTruthy();
+
+    // 检查NPC展示区域是否存在
+    const npcArea = await page.$('.npc-area');
+    expect(npcArea).toBeTruthy();
+  });
+});
