@@ -1,59 +1,36 @@
-# .github/workflows/test-web.yml
-
 name: Web Basic Render Test
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  test-webpage:
+  test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install dependencies
         run: |
-          npm install -g serve
-          npm install -D playwright
+          npm install -g http-server
+          npm install playwright
 
       - name: Start local server
         run: |
-          serve -s Uni-app/unpackage/dist/build/web -l 5000 &
+          http-server Uni-app/unpackage/dist/build/web -p 8080 &
           sleep 5
 
-      - name: Write basic test script
+      - name: Run Playwright Test
         run: |
-          cat << 'EOF' > test.js
-          const { chromium } = require('playwright');
-
-          (async () => {
-            const browser = await chromium.launch();
-            const page = await browser.newPage();
-            await page.goto('http://localhost:5000');
-
-            // 检查页面是否正确渲染
-            const app = await page.$('#app');
-            if (!app) {
-              console.error('❌ #app not found!');
-              process.exit(1);
-            } else {
-              console.log('✅ #app found.');
-            }
-
-            await browser.close();
-          })();
-          EOF
-
-      - name: Run test script
-        run: |
-          npx playwright install --with-deps
-          node test.js
+          node .github/scripts/basic-test.js
