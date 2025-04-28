@@ -26,6 +26,9 @@ jobs:
           npm install -g http-server
           npm install playwright
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Start local server
         run: |
           http-server Uni-app/unpackage/dist/build/web -p 8080 &
