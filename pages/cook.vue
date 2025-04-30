@@ -7,6 +7,11 @@
             <view class="tag-filter">
                 <view class="touhou-notag-left">厌恶</view>
             </view>
+			<view class="cooker-select">
+			                <uv-checkbox-group v-model="cookerValue" placement="row" labelColor="#e6b4a6" labelSize="16px" activeColor="#8d6549" inactiveColor="#fbefcb" @change="selectCooker">
+			                    <uv-checkbox v-for="(item, index) in cookerList" :key="index" :label="item.name" :name="item.value" ></uv-checkbox>
+			                </uv-checkbox-group>
+			</view>
             <view class="cook-total">
                 <view class="cook-total-view" style="width: 50%;">
                     <uv-search placeholder="请输入料理名称" v-model="searchFilter" bgColor="#8D6549" borderColor="#FBEFCB" searchIconColor="#e0afa0" color="#e0afa0" :showAction="false" height="55rpx" @change="filterCooks('')"></uv-search>
@@ -19,6 +24,7 @@
                 </view>
             </view>
         </view>
+		<cook-view :type="'cook'" :cookShow="cookShow" :cookFilter="cookFilter"></cook-view>
         
         
     </view>
