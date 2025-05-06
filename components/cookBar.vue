@@ -8,13 +8,13 @@
 			<view>
 				<span class="cook-bar-middle-span">{{ props.cookItem.chinese }}</span>
 				<span class="cook-bar-middle-span-money"> ￥{{ props.cookItem.money }}</span>
-				<!-- <span class="cook-bar-middle-span-from"> - Lv {{ props.cookItem.level }} ({{ props.cookItem.from }}) </span> -->
+				<span class="cook-bar-middle-span-from"> - Lv {{ props.cookItem.level }} ({{ props.cookItem.from }}) </span>
 			</view>
-			<!-- <view>
+			<view>
 				<span class="cook-bar-middle-span-from">({{ props.cookItem.time }}s) {{ props.cookItem.material }}
 					<text class="npc-item-tab-div-cook-div-cook-middle-material" v-if="!!props.recommandCook">* {{ props.recommandCook }}</text>
 				</span>
-			</view> -->
+			</view>
 			<view class="cook-bar-middle-tag">
 				<view class="touhou-tag" v-for="tag in props.cookItem.tag.split(',')" :key="tag">
 					{{ tag.trim() }}
