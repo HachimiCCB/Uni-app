@@ -67,6 +67,7 @@ import { onShow } from '@dcloudio/uni-app';
 const commentCollection = 'comment';
 const commentFields = '_id, user_id, content, create_time';
 
+<<<<<<< HEAD
 // 格式化时间显示
 const formatTime = (time) => {
   const date = new Date(time);
@@ -74,6 +75,14 @@ const formatTime = (time) => {
 };
 
 const formData = ref({ status: 'loading' });
+=======
+  // 加载评论的方法
+  const loadComments = (data, ended) => {
+    if (ended) {
+      formData.value.status = 'noMore';
+    }
+  };
+>>>>>>> 5ea1b1c6684c81950abf04fa8824337082c762e5
 
 const submitComments = () => {
   uni.navigateTo({
