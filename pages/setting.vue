@@ -9,7 +9,7 @@
     <uv-loading-page :loading="loading" loading-text="读取中..." font-size="20px" loading-mode="semicircle" bgColor="#8D6549"></uv-loading-page>
     <uv-modal ref="clearCacheModal" content='该操作会将所有数据重置!应用会自动重启!' :showCancelButton='true' @confirm="clearCache()"></uv-modal>
     <uv-modal ref="confirmModal" :content='confirmText'></uv-modal>
-    <tab-bar :selected="3"></tab-bar>
+    <tab-bar :selected="4"></tab-bar>
 </template>
 
 <script setup>

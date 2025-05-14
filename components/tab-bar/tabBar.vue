@@ -48,8 +48,14 @@
         "iconPath": "/static/img/common/drinks-1.png",
         "selectedIconPath": "/static/img/common/drinks-0.png",
         "text": "\u996e\u54c1" //ÒûÆ·
-    }, {
+    },{
         "id": 3,
+        "pagePath": "/pages/comments",
+        "iconPath": "/static/img/common/comments-1.png",
+        "selectedIconPath": "/static/img/common/comments-0.png",
+        "text": "\u8bc4\u8bba" //ÆÀÂÛ
+    },{
+        "id": 4,
         "pagePath": "/pages/setting",
         "iconPath": "/static/img/common/setting-1.png",
         "selectedIconPath": "/static/img/common/setting-0.png",

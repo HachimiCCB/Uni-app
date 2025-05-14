@@ -1,0 +1,4 @@
+db.collection('comment').add({
+  user_id: "rheinx",
+  content: "好，把他们上市"
+})
