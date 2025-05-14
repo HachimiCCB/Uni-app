@@ -23,7 +23,7 @@
 					<view v-if="!!props.cookNoFilter && props.cookNoFilter.includes(tag.trim())" class="touhou-tag-left-noselect"></view>
 				</view>
 			</view>
-			<!-- <view class="cook-bar-middle-tag" v-if="!!props.cookItem.withNo"><view class="touhou-notag-left" v-for="tag in props.cookItem.withNo.split(',')" :key="tag">{{ tag.trim() }}</view></view> -->
+			<view class="cook-bar-middle-tag" v-if="!!props.cookItem.withNo"><view class="touhou-notag-left" v-for="tag in props.cookItem.withNo.split(',')" :key="tag">{{ tag.trim() }}</view></view>
 		</view>
 	</view>
 	<view class="cook-bar" v-if="props.type === 'drink'" @click="openItem(props.cookItem)">

@@ -13,27 +13,74 @@
 					<!-- 待修改 -->
             </view>
         </view>
-		
-		<view class="npc-item-tab" :style="{ height: swiperHeight - 150 + 'px' }">
-			<uv-tabs :list="tabList" :current="tabName" @click="clickTab" :scrollable="false"></uv-tabs>
-			<swiper circular :current="tabName" :autoplay="false" @change="e => {tabName = e.detail.current}" :style="{ height: swiperHeight - 200 + 'px' }">
-				<swiper-item>
-					<view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
-						<view class="npc-item-tab-div-drinks-tag">
-							<view class="drink-tag" v-for="item in npc.drinks.split(',')" :key="item" @click="filterDrinks(item.trim())">
-								 • {{ item.trim() }}
-								 <view v-if="drinksFilter.has(item.trim())" class="drink-tag-select"></view>
+        <view class="npc-item-tab" :style="{ height: swiperHeight - 150 + 'px' }">
+            <uv-tabs :list="tabList" :current="tabName" @click="clickTab" :scrollable="false"></uv-tabs>
+            <swiper circular :current="tabName" :autoplay="false" @change="e => {tabName = e.detail.current}" :style="{ height: swiperHeight - 200 + 'px' }">
+                <swiper-item>
+                    <view class="npc-item-tab-div tab-css" :style="{ height: swiperHeight - 200 + 'px' }">
+                        <view class="npc-item-tab-div-recommend-cook" v-if="!!npc.recommendCooks">
+                            <view class="npc-item-tab-div-cook-div-cook" v-for="item in npc.recommendCooks.split(',')" :key="item">
+                    			<cook-bar :type="'cook'" :isRecommand="true" :recommandCook="item.trim().split('*')[1]" :cookItem="cookMap[item.trim().split('*')[0]]" :cookFilter="npc.tag" :cookNoFilter="npc.noTag"></cook-bar>
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-recommend-cook" v-if="!npc.recommendCooks">
+                            <view class="npc-item-tab-div-cook-div-cook" style="height: 50px;display: flex;justify-content: center;">
+                                无推荐!
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-recommend-cook" v-if="!!npc.recommendDrinks">
+                            <view class="npc-item-tab-div-cook-div-cook" v-for="item in npc.recommendDrinks.split(',')" :key="item">
+                    			<cook-bar :type="'drink'" :isRecommand="true" :cookItem="drinksMap[item.trim().split('*')[0]]" :cookFilter="npc.drinks"></cook-bar>
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-recommend-cook" v-if="!npc.recommendDrinks">
+                            <view class="npc-item-tab-div-cook-div-cook" style="height: 50px;display: flex;justify-content: center;">
+                                无推荐!
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+                <swiper-item>
+                    <view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
+						<view class="npc-item-tab-div-cook">
+							<view class="npc-item-tab-div-cook-tag" style="height: 68px;">
+							    <view class="touhou-tag" v-for="item in npc.tag.split(',')" :key="item" @click="filterCooks('tag', item.trim())">
+							         • {{ item.trim() }}
+							        <view v-if="cookFilter.has(item.trim())" class="touhou-tag-select"></view>
+							    </view>
 							</view>
-						</view>
-						<view class="npc-item-tab-div-recommend-cook" :style="{ height: swiperHeight - 280 + 'px' }">
-							<view class="npc-item-tab-div-cook-div-cook" v-for="item in npcDrinks" :key="item.name">
-								<cook-bar :type="'drink'" :isRecommand="false" :cookItem="item" :cookFilter="drinksFilter"></cook-bar>
+							<view class="npc-item-tab-div-cook-tag" style="height: 30px;" v-if="!!npc.noTag">
+							    <view class="touhou-notag-left" v-for="item in npc.noTag.split(',')" :key="item" @click="filterCooks('noTag', item.trim())">
+							        {{ item.trim() }}
+							        <view v-if="cookNoTagFilter.has(item.trim())" class="touhou-notag-left-select"></view>
+							    </view>
 							</view>
+							<view class="npc-item-tab-div-cook-tag" style="height: 30px;" v-else></view>
 						</view>
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
+                        <view class="npc-item-tab-div-recommend-cook" :style="{ height: swiperHeight - 335 + 'px' }">
+                            <view class="npc-item-tab-div-cook-div-cook" v-for="item in cookShow" :key="item.name">
+                    			<cook-bar :type="'cook'" :isRecommand="false" :cookItem="item" :cookFilter="cookFilter" :cookNoFilter="npc.noTag"></cook-bar>
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+                <swiper-item>
+                    <view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
+                        <view class="npc-item-tab-div-drinks-tag">
+                            <view class="drink-tag" v-for="item in npc.drinks.split(',')" :key="item" @click="filterDrinks(item.trim())">
+                                 • {{ item.trim() }}
+                                 <view v-if="drinksFilter.has(item.trim())" class="drink-tag-select"></view>
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-recommend-cook" :style="{ height: swiperHeight - 280 + 'px' }">
+                            <view class="npc-item-tab-div-cook-div-cook" v-for="item in npcDrinks" :key="item.name">
+                    			<cook-bar :type="'drink'" :isRecommand="false" :cookItem="item" :cookFilter="drinksFilter"></cook-bar>
+                            </view>
+                        </view>
+                    </view>
+                </swiper-item>
+            </swiper>
+        </view>
     </view>
 </template>
 
@@ -54,9 +101,9 @@
 	})
     
     const tabList = ref([
-        {name: '饮料'},
-        {name: '烹饪'},
         {name: '推荐'},
+        {name: '烹饪'},
+        {name: '饮料'},
         {name: '符卡'},
         {name: '羁绊'},
     ])
