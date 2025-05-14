@@ -44,12 +44,6 @@
   // 用于管理表单数据和加载状态的状态变量
   const formData = ref({ status: 'loading' });
 
-  // 提交新评论的方法
-  const submitComments = () => {
-    // 在这里添加你的评论提交逻辑
-    console.log('Submit comment');
-  };
-
   // 加载评论的方法
   const loadComments = (data, ended) => {
     if (ended) {

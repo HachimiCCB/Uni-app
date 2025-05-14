@@ -24,6 +24,7 @@ import { ref } from 'vue'
 
 const comment = ref('')
 const images = ref([])
+const db = uniCloud.database();
 
 const chooseImage = () => {
   uni.chooseImage({
@@ -38,6 +39,7 @@ const submitComment = () => {
   // 这里可以添加提交逻辑，如上传到服务器等
   console.log('提交内容:', comment.value)
   console.log('图片列表:', images.value)
+  db.collection('comment').add({ user_id: 'client_test', content: comment.value, })
 }
 
 const cancelComment = () => {
