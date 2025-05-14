@@ -54,6 +54,7 @@ import { onLoad } from '@dcloudio/uni-app'
 
 const comment = ref('')
 const images = ref([])
+const db = uniCloud.database();
 
 const chooseImage = () => {
   uni.chooseImage({
@@ -86,6 +87,7 @@ const previewImage = (index) => {
 }
 
 const submitComment = () => {
+<<<<<<< HEAD
   if (!comment.value.trim()) {
     uni.showToast({ title: '请输入评论内容', icon: 'none' })
     return
@@ -98,6 +100,12 @@ const submitComment = () => {
     comment.value = ''
     images.value = []
   }, 1500)
+=======
+  // 这里可以添加提交逻辑，如上传到服务器等
+  console.log('提交内容:', comment.value)
+  console.log('图片列表:', images.value)
+  db.collection('comment').add({ user_id: 'client_test', content: comment.value, })
+>>>>>>> 5ea1b1c6684c81950abf04fa8824337082c762e5
 }
 
 const cancelComment = () => {
