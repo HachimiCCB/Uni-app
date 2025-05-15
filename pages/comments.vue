@@ -47,7 +47,7 @@
     
     <!-- 提交新评论的按钮 -->
     <view class="comment-footer">
-      <button class="submit-btn" @click="submitComments">
+      <button class="submit-btn" @click="openCommentCreate()">
         <uni-icons type="compose" size="20" color="#fff"></uni-icons>
         <text>发表评论</text>
       </button>
@@ -87,6 +87,13 @@ const loadComments = (data, ended) => {
   }
 };
 
+const openCommentCreate = () => {
+	// uni.setStorageSync('commentCreate', npc)
+	uni.navigateTo({
+		url: '/pages/commentCreate'
+	})
+}
+	
 onShow(() => {
   console.log('评论页面显示');
 });

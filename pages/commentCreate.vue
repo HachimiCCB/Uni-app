@@ -39,6 +39,12 @@
         :disabled="!comment.trim()"
         class="submit-btn"
       >提交</button>
+	  <button
+	    type="default" 
+	    @click="submitImage"
+	    :disabled="!comment.trim()"
+	    class="submit-btn"
+	  >图片测试</button>
       <button 
         type="default" 
         @click="cancelComment"
@@ -100,6 +106,20 @@ const submitComment = () => {
     comment.value = ''
     images.value = []
   }, 1500)
+}
+
+const submitImage = () => {
+	if (images.value.length === 0) {
+	    uni.showToast({ title: '请先选择图片', icon: 'none' });
+	    return;
+	}
+	const filePath = images.value[0]; 
+	uniCloud.uploadFile({
+		filePath: filePath,
+		cloudPath: "test_" + Date.now() + ".png",  // 上传到云存储的文件名
+	}).then(res=>{
+		console.log(res);
+	})
 }
 
 const cancelComment = () => {

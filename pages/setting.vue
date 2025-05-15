@@ -3,7 +3,8 @@
         <uv-notice-bar :text="notice" color="#830000"></uv-notice-bar>
         <uv-toast ref="toast"></uv-toast>
         <button @click="restartApp()">重启应用</button>
-      
+		<button @click="restartApp()">切换账号</button>
+		<button @click="restartApp()">测试模式</button>
         <!-- <button @click="test()">loading</button> -->
     </view>
     <uv-loading-page :loading="loading" loading-text="读取中..." font-size="20px" loading-mode="semicircle" bgColor="#8D6549"></uv-loading-page>
