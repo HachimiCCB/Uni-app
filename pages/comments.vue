@@ -75,11 +75,11 @@ const formatTime = (time) => {
 
 const formData = ref({ status: 'loading' });
 
-const submitComments = () => {
-  uni.navigateTo({
-    url: '/pages/comments/submit'
-  });
-};
+// const submitComments = () => {
+//   uni.navigateTo({
+//     url: '/pages/comments/submit'
+//   });
+// };
 
 const loadComments = (data, ended) => {
   if (ended) {
@@ -90,7 +90,7 @@ const loadComments = (data, ended) => {
 const openCommentCreate = () => {
 	// uni.setStorageSync('commentCreate', npc)
 	uni.navigateTo({
-		url: '/pages/commentCreate'
+		url: '/pages/articleCreate'
 	})
 }
 	
