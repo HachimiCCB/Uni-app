@@ -48,21 +48,35 @@
         	"style" : 
         	{
         		"enablePullDownRefresh" : true,
-        		"navigationBarTitleText" : "垂直排列，无略缩图，主标题+副标题显示"
+        		"navigationBarTitleText" : "测试模板：垂直排列，无略缩图，主标题+副标题显示"
         	}
         },
         {
         	"path" : "pages/commentCreate",
         	"style" : 
         	{
-        		"navigationBarTitleText" : ""
+        		"navigationBarTitleText" : "创建评论"
         	}
         },
         {
         	"path" : "pages/articleCreate",
         	"style" : 
         	{
-        		"navigationBarTitleText" : ""
+        		"navigationBarTitleText" : "创建分享"
+        	}
+        },
+        {
+        	"path" : "pages/article",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "分享详情"
+        	}
+        },
+        {
+        	"path" : "pages/articleDetail",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "文章详情"
         	}
         }
     ],
@@ -97,7 +111,7 @@
             "selectedIconPath": "/static/img/common/setting-0.png",
             "text": ""
         },{
-            "pagePath": "pages/comments",
+            "pagePath": "pages/article",
             "iconPath": "/static/img/common/comments-1.png",
             "selectedIconPath": "/static/img/common/comments-0.png",
             "text": ""

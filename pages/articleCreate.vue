@@ -21,7 +21,7 @@
 		<!-- 操作按钮 -->
 		<view class="button-group">
 			<button type="default" @click="submitArticle" :disabled="!content.trim()" class="submit-btn">提交</button>
-			<button type="default" @click="submitImage" :disabled="!content.trim()" class="submit-btn">图片测试</button>
+<!-- 			<button type="default" @click="submitImage" :disabled="!content.trim()" class="submit-btn">图片测试</button> -->
 			<button type="default" @click="cancelArticle" class="cancel-btn">取消</button>
 		</view>
 	</view>
