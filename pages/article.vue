@@ -4,7 +4,7 @@
       ref="udb"
       v-slot:default="{ data, loading, error }"
       collection="article"
-      field="title,author,summary,coverImage,publishDate"
+      field="title,author,summary,coverImage,publishDate,tags"
       orderby="publishDate desc"
     >
       <view class="article-list">
@@ -15,11 +15,16 @@
           @click="goToDetail(item._id)"
         >
           <image :src="item.coverImage" class="cover-image" mode="aspectFill" />
+		  <view class="article-tags">
+		    <text v-for="tag in item.tags" :key="tag" class="tag">{{ tag }}</text>
+		  </view>
           <view class="article-info">
             <text class="title">{{ item.title }}</text>
-            <text class="author">作者：{{ item.author }}</text>
-<!--            <text class="summary">{{ item.summary }}</text> -->
-            <text class="date">{{ formatDate(item.publishDate) }}</text>
+           <text class="summary">{{ item.summary }}</text>
+			<view class="meta-line"> <!-- 新增包裹容器 -->
+			    <text class="author">作者：{{ item.author }}</text>
+			    <text class="date">{{ formatDate(item.publishDate) }}</text>
+			  </view>
           </view>
         </view>
       </view>
@@ -29,8 +34,8 @@
 	
 	<view class="comment-footer">
 	  <button class="submit-btn" @click="openArticleCreate()">
-	    <uni-icons type="compose" size="20" color="#fff"></uni-icons>
-	    <text>发表评论</text>
+	    <uni-icons type="compose" size="20"></uni-icons>
+	    <text>发表我的文章</text>
 	  </button>
 	</view>
 	
@@ -69,7 +74,6 @@ onShow(() => {
 <style scoped>
 .article-container {
   padding: 20rpx;
-  background-color: #f5f5f5;
 }
 
 .article-list {
@@ -79,7 +83,8 @@ onShow(() => {
 }
 
 .article-card {
-  background: #fff;
+  background-color: #d4aa76;
+  border: 2px solid rgb(165, 115, 66);
   border-radius: 20rpx;
   overflow: hidden;
   box-shadow: 0 5rpx 10rpx rgba(0, 0, 0, 0.05);
@@ -90,6 +95,32 @@ onShow(() => {
   transform: scale(0.98);
 }
 
+.article-tags {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10rpx;
+  z-index: 2; /* 确保在图片之上 */
+}
+
+.article-tags .tag {
+  display: inline-block;
+  border-image-source: url('/static/img/common/tag.png');
+  border-image-slice: 0 10 0 10 fill; /* 上下不切割，左右各切割10rpx */
+  border-image-width: 0 10rpx 0 10rpx; /* 左右保留10rpx不拉伸区域 */
+  border-image-repeat: stretch; /* 中间区域横向拉伸 */
+  padding: 10rpx 30rpx;
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 1.4;
+}
+
+
+
 .cover-image {
   width: 100%;
   height: 200rpx;
@@ -97,6 +128,10 @@ onShow(() => {
 
 .article-info {
   padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  height: 110px; /* 根据封面图高度调整 */
+  position: relative; /* 新增定位上下文 */
 }
 
 .title {
@@ -104,13 +139,18 @@ onShow(() => {
   font-weight: bold;
   color: #333;
   margin-bottom: 10rpx;
+  white-space: normal; /* 允许标题自动换行 */
+  line-height: 1.4; /* 新增行高 */
 }
 
-.author,
+.author {
+  font-size: 24rpx;
+  color: #999;
+  margin: 5rpx 0; /* 调整间距 */
+}
 .date {
   font-size: 24rpx;
   color: #999;
-  margin-top: 10rpx;
 }
 
 .summary {
@@ -118,36 +158,33 @@ onShow(() => {
   color: #555;
   margin-top: 10rpx;
   line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;     /* 限制显示3行 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-line {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  left: 20rpx;   /* 与 article-info 的 padding 一致 */
+  right: 20rpx;  /* 与 article-info 的 padding 一致 */
+  bottom: 20rpx;
 }
 .comment-footer {
 	position: fixed;
-	bottom: 120rpx;
+	bottom: 110rpx;
 	left: 0;
 	right: 0;
-	padding: 20rpx 30rpx;
-	background-color: #f8f3ee;
-	border-top: 1rpx solid #e8e1d9;
-
-	.submit-btn {
-	  height: 80rpx;
-	  line-height: 80rpx;
-	  background: linear-gradient(145deg, #D2B48C, #B8860B);
-	  color: #fff;
-	  border-radius: 40rpx;
-	  font-size: 30rpx;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  
-	  text {
-		margin-left: 10rpx;
-	  }
-	  
-	  &:active {
-		background: linear-gradient(145deg, #B8860B, #D2B48C);
-		transform: scale(0.98);
-	  }
-	}
+	padding: 0rpx 40rpx;
 }
 
+.comment-footer .submit-btn {
+	  height: 80rpx;
+	  line-height: 80rpx;
+	  background-color: antiquewhite;
+	}
 </style>

@@ -27,7 +27,7 @@
     </unicloud-db>
 
     <!-- 底部导航栏 -->
-    <tab-bar :selected="0"></tab-bar>
+<!--    <tab-bar :selected="0"></tab-bar> -->
   </view>
 </template>
 
@@ -93,6 +93,7 @@ onLoad((options) => {
   .article-content {
     font-size: 30rpx;
     line-height: 1.6;
+	white-space: pre-line;
     color: #444;
   }
 
