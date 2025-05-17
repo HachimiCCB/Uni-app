@@ -78,6 +78,13 @@
         	{
         		"navigationBarTitleText" : "文章详情"
         	}
+        },
+        {
+        	"path" : "pages/login",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : ""
+        	}
         }
     ],
     "globalStyle": {
