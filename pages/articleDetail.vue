@@ -61,7 +61,7 @@ onLoad((options) => {
 <style lang="scss">
 .article-container {
   padding: 30rpx;
-  background-color: #fff;
+   background-color: #f5e8d0;
 
   .loading-text, .error-text {
     text-align: center;
