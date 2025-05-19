@@ -21,7 +21,8 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, watch } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
 import tabBar from '@/components/tab-bar/tabBar.vue'
 import { initCache } from '../js/common.js'
 
@@ -58,6 +59,12 @@ const checkLoginStatus = () => {
     }
 }
 
+watch(isLoggedIn, (newVal) => {
+  if (newVal) {
+    checkLoginStatus() // 当登录状态变化时再次检查
+  }
+})
+
 // 跳转到登录页面
 const navigateToLogin = () => {
     uni.navigateTo({
@@ -78,7 +85,7 @@ const switchAccount = () => {
 }
 
 // 初始化时检查登录状态
-onMounted(() => {
+onShow(() => {
     checkLoginStatus()
 })
 
