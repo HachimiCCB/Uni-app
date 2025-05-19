@@ -79,6 +79,50 @@
                         </view>
                     </view>
                 </swiper-item>
+                <swiper-item>
+                    <view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
+                        <view v-if="!!npc.rewardCard?.effect">
+                            <view class="npc-item-tab-div-reward-title">
+                                <view>{{ npc.rewardCard.name }}</view>
+                            </view>
+                            <view class="npc-item-tab-div-reward-div">
+                                <text>{{ npc.rewardCard.effect }}</text>
+                            </view>
+                            <view class="npc-item-tab-div-punish-title">
+                                <view>{{ npc.punishCard.name }}</view>
+                            </view>
+                            <view class="npc-item-tab-div-punish-div">
+                                <text>{{ npc.punishCard.effect }}</text>
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-friend" v-else>
+                            <view><uv-empty text="无符卡！" textColor="#000" textSize="20px" icon="/static/img/common/no-card.png"></uv-empty></view>
+                        </view>
+                    </view>
+                </swiper-item>
+                <swiper-item>
+                    <view class="npc-item-tab-div" :style="{ height: swiperHeight - 200 + 'px' }">
+                        <view class="npc-item-tab-div-friend" v-if="npc?.friendship.length > 0">
+                            <view class="npc-item-tab-div-friend-item" v-for="item in npc.friendship" :key="item.name">
+                                <view class="npc-item-tab-div-friend-item-view">
+                                    <view class="left">羁绊提升：</view>
+                                    <view class="right"><uv-rate activeIcon="heart-fill" v-model="item.name" inactiveIcon="heart" readonly=""></uv-rate></view>
+                                </view>
+                                <view class="npc-item-tab-div-friend-item-view">
+                                    <view class="left">前置任务：</view>
+                                    <view class="right"><text>{{ !!item.condition ? item.condition : '无' }}</text></view>
+                                </view>
+                                <view class="npc-item-tab-div-friend-item-view">
+                                    <view class="left">{{ item.name === '5' ? '最终奖励：' : '升级任务：'}}</view>
+                                    <view class="right">{{ item.task }}</view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="npc-item-tab-div-friend" v-else>
+                            <view><uv-empty text="无羁绊！" textColor="#000" textSize="20px" icon="/static/img/common/no-friend.png" iconSize="220"></uv-empty></view>
+                        </view>
+                    </view>
+                </swiper-item>
             </swiper>
         </view>
     </view>
