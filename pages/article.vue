@@ -41,6 +41,7 @@
 	
 	<tab-bar :selected="3"></tab-bar>
   </view>
+  <GlobalChatButton/>
 </template>
 
 <script setup>

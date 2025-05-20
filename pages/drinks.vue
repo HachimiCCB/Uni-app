@@ -9,6 +9,7 @@
 		<cook-view :type="'drink'" :cookShow="npcDrinks" :cookFilter="drinksFilter"></cook-view>
     </view>
 	<tab-bar :selected="2"></tab-bar>
+	<GlobalChatButton/>
 </template>
 
 <script setup>

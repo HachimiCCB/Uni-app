@@ -25,6 +25,7 @@
         </view>
     </view>
     <tab-bar :selected="0"></tab-bar>
+	<GlobalChatButton/>
 </template>
 
 <script setup>

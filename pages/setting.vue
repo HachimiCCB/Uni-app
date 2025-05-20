@@ -18,12 +18,14 @@
     <uv-modal ref="clearCacheModal" content='该操作会将所有数据重置!应用会自动重启!' :showCancelButton='true' @confirm="clearCache()"></uv-modal>
     <uv-modal ref="confirmModal" :content='confirmText'></uv-modal>
     <tab-bar :selected="4"></tab-bar>
+	<GlobalChatButton/>
 </template>
 
 <script setup>
 import { reactive, ref, watch } from 'vue';
 import { onShow } from '@dcloudio/uni-app';
 import tabBar from '@/components/tab-bar/tabBar.vue'
+import GlobalChatButton from '@/components/GlobalChatButton/GlobalChatButton.vue'
 import { initCache } from '../js/common.js'
 
 const notice = ref('关注Anon Tokyo喵，关注Anon Tokyo谢谢喵!!!!')

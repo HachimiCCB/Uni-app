@@ -77,6 +77,7 @@
         </uv-modal>
     </view>
 	<tab-bar :selected="1"></tab-bar>
+	<GlobalChatButton/>
 </template>
 
 <script setup>
