@@ -49,6 +49,14 @@
                     "xhdpi" : "",
                     "xxhdpi" : ""
                 }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "static/img/common/no-card.png",
+                    "xhdpi" : "static/img/common/no-card.png",
+                    "xxhdpi" : "static/img/common/no-card.png",
+                    "xxxhdpi" : "static/img/common/no-card.png"
+                }
             }
         }
     },

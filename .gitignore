@@ -2,3 +2,6 @@
 /.vite/
 /node_modules/
 /uni_modules/
+/unpackage/cache/
+/unpackage/release/
+/unpackage/dist/
