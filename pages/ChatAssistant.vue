@@ -1,7 +1,7 @@
 <template>
   <view class="chat-container">
     <view class="chat-header">
-      <text>AI助手</text>
+      <text>夜雀AI助手</text>
       <uni-icons type="close" size="24" @click="closeChat"></uni-icons>
     </view>
     
@@ -25,7 +25,7 @@ import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 
 const messages = ref([
-  { role: 'assistant', content: '你好！我是AI助手，有什么可以帮您的吗？' }
+  { role: 'assistant', content: '您好！我是东方夜雀食堂AI助手，如果您对游戏中的料理、人物、玩法感兴趣，请尽管问我~' }
 ])
 const inputText = ref('')
 
