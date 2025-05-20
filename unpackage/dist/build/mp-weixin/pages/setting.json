@@ -6,6 +6,7 @@
     "uv-toast": "../uni_modules/uv-toast/components/uv-toast/uv-toast",
     "uv-loading-page": "../uni_modules/uv-loading-page/components/uv-loading-page/uv-loading-page",
     "uv-modal": "../uni_modules/uv-modal/components/uv-modal/uv-modal",
-    "tab-bar": "../components/tab-bar/tabBar"
+    "tab-bar": "../components/tab-bar/tabBar",
+    "global-chat-button": "../components/GlobalChatButton/GlobalChatButton"
   }
 }

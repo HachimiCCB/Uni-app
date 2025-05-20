@@ -3,6 +3,7 @@
   "backgroundColor": "#8D6549",
   "usingComponents": {
     "uv-scroll-list": "../uni_modules/uv-scroll-list/components/uv-scroll-list/uv-scroll-list",
+    "global-chat-button": "../components/GlobalChatButton/GlobalChatButton",
     "tab-bar": "../components/tab-bar/tabBar"
   }
 }

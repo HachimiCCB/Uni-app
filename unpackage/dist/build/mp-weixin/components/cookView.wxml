@@ -1,1 +1,1 @@
-<view class="cook-div data-v-29fa0239"><view wx:for="{{a}}" wx:for-item="item" wx:key="c" class="cook-div-cook data-v-29fa0239"><cook-bar wx:if="{{item.b}}" class="data-v-29fa0239" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"></cook-bar></view></view>
+<view class="cook-div data-v-e8345208"><view wx:for="{{a}}" wx:for-item="item" wx:key="c" class="cook-div-cook data-v-e8345208"><cook-bar wx:if="{{item.b}}" class="data-v-e8345208" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"></cook-bar></view></view>

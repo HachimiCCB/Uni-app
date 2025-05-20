@@ -1,21 +1,57 @@
 'use strict';
-const axios = require('axios');
 
 exports.main = async (event, context) => {
   try {
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: "gpt-3.5-turbo",
-      messages: [{role: "user", content: event.message}]
-    }, {
+    // 参数校验
+    if (!event?.message?.trim()) {
+      throw new Error('消息内容不能为空');
+    }
+
+    // 构造请求数据
+    const requestData = {
+      input: {
+        prompt: event.message
+      },
+      parameters: {},
+      debug: {}
+    };
+
+    // 调用阿里百炼 DashScope 接口
+    const response = await uniCloud.httpclient.request('https://dashscope.aliyuncs.com/api/v1/apps/b3a64cafe994432d9e5993d03c104755/completion', {
+      method: 'POST',
+      contentType: 'json',
+      dataType: 'json',
+      timeout: 60000,
+      data: requestData,
       headers: {
-        'Authorization': `Bearer ${context.env.OPENAI_API_KEY}`,
+        'Authorization': 'Bearer sk-1cbc18b0ce0148af9fa8c54081281f55',
         'Content-Type': 'application/json'
       }
     });
-    
-    return response.data.choices[0].message.content;
-  } catch (err) {
-    console.error('API Error:', err);
-    return '抱歉，我暂时无法回答这个问题';
+
+    // 检查HTTP状态码
+    if (response.status !== 200) {
+      const errorMsg = response.data?.error?.message || '未知错误';
+      throw new Error(`API异常 (状态码 ${response.status}): ${errorMsg}`);
+    }
+
+    // 检查返回数据结构是否符合预期
+    const result = response.data;
+    const output = result?.output;
+    if (!output) {
+      throw new Error('API返回数据格式异常');
+    }
+
+    // 返回 output 作为最终结果
+    return output.text;
+
+  } catch (error) {
+    console.error('完整错误日志:', error);
+
+    // 保持错误时返回JSON结构
+    return {
+      code: error.errCode || 500,
+      message: error.message || '服务暂时不可用，请稍后重试'
+    };
   }
 };

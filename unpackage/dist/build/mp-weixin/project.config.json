@@ -18,7 +18,7 @@
         }
     },
     "compileType": "miniprogram",
-    "libVersion": "3.7.12",
+    "libVersion": "",
     "appid": "wx87086ec1f2a70664",
     "projectname": "东方夜雀食谱",
     "condition": {},

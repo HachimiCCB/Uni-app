@@ -65,7 +65,15 @@ const sendMessage = async () => {
 }
 
 const closeChat = () => {
-  uni.navigateBack()
+  // 获取当前页面路径
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  const url = currentPage.route
+  
+  // 重启当前页面
+  uni.redirectTo({
+    url: '/' + url
+  })
 }
 </script>
 

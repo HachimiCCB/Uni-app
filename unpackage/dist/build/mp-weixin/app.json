@@ -4,7 +4,15 @@
     "pages/npcItem",
     "pages/drinks",
     "pages/cook",
-    "pages/setting"
+    "pages/setting",
+    "pages/comments",
+    "pages/test/test",
+    "pages/commentCreate",
+    "pages/articleCreate",
+    "pages/article",
+    "pages/articleDetail",
+    "pages/login",
+    "pages/ChatAssistant"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -40,8 +48,17 @@
         "iconPath": "/static/img/common/setting-1.png",
         "selectedIconPath": "/static/img/common/setting-0.png",
         "text": ""
+      },
+      {
+        "pagePath": "pages/article",
+        "iconPath": "/static/img/common/comments-1.png",
+        "selectedIconPath": "/static/img/common/comments-0.png",
+        "text": ""
       }
     ]
+  },
+  "networkTimeout": {
+    "request": 60000
   },
   "usingComponents": {}
 }
