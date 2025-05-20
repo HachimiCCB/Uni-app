@@ -9,7 +9,7 @@ import { ref } from 'vue'
 
 const openChat = () => {
   uni.navigateTo({
-    url: '/pages/ChatAssistant'
+    url: '/pages/ChatAssistant2'
   })
 }
 </script>

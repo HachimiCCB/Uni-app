@@ -92,7 +92,14 @@
         	{
         		"navigationBarTitleText" : ""
         	}
-        }
+        },
+		{
+			"path" : "pages/ChatAssistant2",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		}
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
