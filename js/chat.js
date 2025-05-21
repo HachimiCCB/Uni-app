@@ -5,7 +5,7 @@ export const sendMessageToAI = async (message) => {
     if (!message?.trim()) throw new Error('消息内容不能为空')
 
     // 配置参数（正式环境应从安全存储获取）
-    const API_KEY = 'sk-1cbc18b0ce0148af9fa8c54081281f55' // 替换为真实API密钥
+    const API_KEY = '' // 替换为真实API密钥
     const APP_ID = 'b3a64cafe994432d9e5993d03c104755'
 
     // 构造请求参数

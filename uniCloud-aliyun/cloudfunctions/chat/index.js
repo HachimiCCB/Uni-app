@@ -27,7 +27,7 @@
 //       timeout: 60000,
 //       data: requestData,
 //       headers: {
-//         'Authorization': 'Bearer sk-1cbc18b0ce0148af9fa8c54081281f55',
+//         'Authorization': 'Bearer ',
 //         'Content-Type': 'application/json'
 //       }
 //     });
