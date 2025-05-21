@@ -14,14 +14,3 @@ if response.status_code != HTTPStatus.OK:
     print(f'请参考文档：https://help.aliyun.com/zh/model-studio/developer-reference/error-code')
 else:
     print(response.output.text)
-
-curl.exe -X POST https://dashscope.aliyuncs.com/api/v1/apps/b3a64cafe994432d9e5993d03c104755/completion \
---header "Authorization: "sk-1cbc18b0ce0148af9fa8c54081281f55" \
---header 'Content-Type: application/json' \
---data '{
-    "input": {
-        "prompt": "你是谁？"
-    },
-    "parameters":  {},
-    "debug": {}
-}' 
