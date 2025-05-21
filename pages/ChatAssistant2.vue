@@ -19,6 +19,23 @@
       >
         <view class="message-content">{{ msg.content }}</view>
         <view class="message-time">{{ formatTime(msg.timestamp) }}</view>
+		
+		<view v-if="msg.matchedDishes?.length" class="dish-cards">
+		    <!-- 每个菜品单独卡片 -->
+		    <view 
+		      v-for="(dish, dIndex) in msg.matchedDishes" 
+		      :key="dIndex"
+		      class="dish-card"
+		    >
+		      <text class="dish-title">{{ dish.chinese }}</text>
+		      <view class="dish-info">
+		        <text>🍳 材料：{{ dish.material }}</text>
+		        <text>💰 售价：{{ dish.money }}文</text>
+		        <text>⏳ 等级：{{ dish.level }}级</text>
+		      </view>
+		    </view>
+		  </view>
+			
       </view>
     </scroll-view>
     
@@ -50,6 +67,9 @@
 import { ref, reactive, onMounted } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { nextTick } from 'vue'
+
+import { cookData } from '@/js/cook.js'
+import { drinksData } from '@/js/drinks.js'
 
 const db = uniCloud.database();
 
@@ -168,6 +188,7 @@ const sendMessage = async () => {
     isLoading.value = false
     assistantMessage.loading = false
     assistantMessage.timestamp = new Date()
+	assistantMessage.matchedDishes = matchDishes(assistantMessage.content)
   }
 }
 
@@ -176,6 +197,38 @@ const closeChat = () => {
     url: '/' + getCurrentPages().pop().route
   })
 }
+
+// 新增消息格式化方法
+const formatMessage = (text) => {
+  return text.replace(/\*([^*]+)\*/g, '<span class="highlight">$1</span>')
+}
+
+// 新增菜品匹配方法
+// 修改后的菜品匹配方法
+const matchDishes = (content) => {
+  const actualData = cookData() || []
+
+  const matches = [...new Set(content.match(/\[[^\[\]]+?\]/g) || [])]
+
+  const extractedNames = matches
+    .map(m => m.replace(/[\[\]]/g, '').trim())
+    .filter(Boolean)
+  console.log('识别出的内容:', extractedNames)
+
+  const matched = extractedNames.reduce((arr, name) => {
+    const dish = actualData.find(d => d.chinese === name)
+    if (dish) {
+      arr.push(dish)
+    }
+    return arr
+  }, [])
+
+  return matched
+}
+
+
+
+
 </script>
 
 <style scoped>
@@ -298,6 +351,46 @@ const closeChat = () => {
   background: #ddd;
   transform: none;
 }
+
+/* 新增高亮样式 */
+.highlight {
+  color: #8D6549;
+  font-weight: 600;
+}
+
+/* 菜品卡片样式 */
+/* 菜品卡片容器 */
+.dish-cards {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* 卡片间距 */
+}
+
+/* 单个菜品卡片 */
+.dish-card {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+}
+
+/* 标题样式 */
+.dish-title {
+  font-size: 16px;
+  color: #8D6549;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* 信息项样式 */
+.dish-info text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
 
 @keyframes fadeIn {
   from { 
