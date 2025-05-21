@@ -47,14 +47,27 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { nextTick } from 'vue'
 
+const db = uniCloud.database();
+
 const apiConfig = {
-  apiKey: 'sk-1cbc18b0ce0148af9fa8c54081281f55',
+  apiKey: '',
   apiUrl: 'https://dashscope.aliyuncs.com/api/v1/apps/b3a64cafe994432d9e5993d03c104755/completion'
 }
+
+onMounted(async () => {
+    const res = await db.collection('api').where({
+      appid: 'b3a64cafe994432d9e5993d03c104755'
+    }).get()
+
+    console.log('apikey：', res.result.data[0].apikey)
+
+    const key = res.result.data[0].apikey
+	apiConfig.apiKey = key
+})
 
 const messages = ref([
   { 
