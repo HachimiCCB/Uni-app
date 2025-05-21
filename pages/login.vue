@@ -180,7 +180,7 @@ const handleLogin = async () => {
       })
  
       setTimeout(() => {
-        uni.redirectTo({  // 改用reLaunch而不是switchTab
+        uni.switchTab({
           url: '/pages/setting'
         })
       }, 1500)

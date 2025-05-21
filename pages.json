@@ -69,7 +69,8 @@
         	"path" : "pages/article",
         	"style" : 
         	{
-        		"navigationBarTitleText" : "分享详情"
+        		"navigationBarTitleText" : "分享详情",
+				"enablePullDownRefresh": true
         	}
         },
         {

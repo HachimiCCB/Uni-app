@@ -45,9 +45,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import tabBar from '@/components/tab-bar/tabBar.vue';
-import { onShow } from '@dcloudio/uni-app';
+import { onShow, onPullDownRefresh } from '@dcloudio/uni-app';
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
@@ -70,6 +70,20 @@ const goToDetail = (id) => {
 onShow(() => {
   console.log('文章列表页面加载');
 });
+
+onPullDownRefresh(() => {
+  console.log('触发下拉刷新');
+  const udb = getCurrentInstance().refs.udb;
+  if (udb) {
+    udb.loadData({
+      clear: true
+    });
+  }
+  setTimeout(() => {
+    uni.stopPullDownRefresh(); // 结束下拉动画
+  }, 800); // 可根据网络情况调整
+});
+
 </script>
 
 <style scoped>

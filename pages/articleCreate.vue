@@ -39,6 +39,23 @@
 	const content = ref('')
 	const images = ref([])
 	const db = uniCloud.database();
+	const userInfo = uni.getStorageSync('userInfo')
+	
+	if (userInfo && userInfo.loggedIn) {
+	  console.log('当前登录用户：', userInfo.username)
+	} else {
+	  uni.showModal({
+	    title: '提示',
+	    content: '请先登录',
+	    showCancel: false,
+	    confirmText: '确定',
+	    success: () => {
+	      uni.switchTab({
+	        url: '/pages/setting' // 替换为你的登录页路径
+	      })
+	    }
+	  })
+	}
 
 	const chooseImage = () => {
 		uni.chooseImage({
@@ -69,39 +86,7 @@
 			urls: images.value
 		})
 	}
-
-	// const submitArticle = () => {
-	// 	if (!content.value.trim()) {
-	// 		uni.showToast({
-	// 			title: '请输入文章内容',
-	// 			icon: 'none'
-	// 		})
-	// 		return
-	// 	}
-
-	// 	uni.showLoading({
-	// 		title: '提交中...'
-	// 	})
-
-	// 	db.collection('article').add({
-	// 		title: title.value,
-	// 		author: '客户端发文测试',
-	// 		content: content.value,
-	// 		coverImage: images.value,
-			
-	// 		// coverImage: 'https://mp-ff7bc69f-7dc5-419e-a5f0-9beaaa723fc8.cdn.bspapp.com/cloudstorage/50839c8f-b018-4aad-9e48-80403d482ab2.png',
-	// 	})
-
-	// 	setTimeout(() => {
-	// 		uni.hideLoading()
-	// 		uni.showToast({
-	// 			title: '提交成功',
-	// 			icon: 'success'
-	// 		})
-	// 		content.value = ''
-	// 		images.value = []
-	// 	}, 1500)
-	// }
+	
 	const submitArticle = async () => {
 	  if (!content.value.trim()) {
 	    uni.showToast({ title: '请输入文章内容', icon: 'none' });
@@ -125,9 +110,11 @@
 	    // 2. 提交数据到数据库（包含云端图片路径）
 	    await db.collection('article').add({
 	      title: title.value,
-	      author: '客户端发文测试',
+	      author: userInfo.username,
 	      content: content.value,
 	      coverImage: uploadedImages[0], // 使用云端fileID数组
+		  publishDate: new Date(),
+		  lastUpdated: new Date(),
 	    });
 	
 	    // 3. 清空表单并跳转
