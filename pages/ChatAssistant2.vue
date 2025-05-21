@@ -35,6 +35,22 @@
 		      </view>
 		    </view>
 		  </view>
+		  
+		<view v-if="msg.matchedDrinks?.length" class="drink-cards">
+		  <view 
+		    v-for="(drink, dIndex) in msg.matchedDrinks" 
+		    :key="dIndex"
+		    class="drink-card"
+		  >
+		    <text class="drink-title">{{ drink.chinese }}</text>
+		    <view class="drink-info">
+		      <text>🧃 特性：{{ drink.tag }}</text>
+		      <text>💰 售价：{{ drink.money }}文</text>
+		      <text>⏳ 等级：{{ drink.level }}级</text>
+		    </view>
+		  </view>
+		</view>
+
 			
       </view>
     </scroll-view>
@@ -188,7 +204,9 @@ const sendMessage = async () => {
     isLoading.value = false
     assistantMessage.loading = false
     assistantMessage.timestamp = new Date()
-	assistantMessage.matchedDishes = matchDishes(assistantMessage.content)
+	const { matchedDishes, matchedDrinks } = matchItems(assistantMessage.content)
+	assistantMessage.matchedDishes = matchedDishes
+	assistantMessage.matchedDrinks = matchedDrinks
   }
 }
 
@@ -203,28 +221,30 @@ const formatMessage = (text) => {
   return text.replace(/\*([^*]+)\*/g, '<span class="highlight">$1</span>')
 }
 
-// 新增菜品匹配方法
 // 修改后的菜品匹配方法
-const matchDishes = (content) => {
-  const actualData = cookData() || []
+const matchItems = (content) => {
+  const dishes = cookData() || []
+  const drinks = drinksData() || []
 
   const matches = [...new Set(content.match(/\[[^\[\]]+?\]/g) || [])]
 
   const extractedNames = matches
     .map(m => m.replace(/[\[\]]/g, '').trim())
     .filter(Boolean)
-  console.log('识别出的内容:', extractedNames)
 
-  const matched = extractedNames.reduce((arr, name) => {
-    const dish = actualData.find(d => d.chinese === name)
-    if (dish) {
-      arr.push(dish)
-    }
-    return arr
-  }, [])
+  const matchedDishes = []
+  const matchedDrinks = []
 
-  return matched
+  extractedNames.forEach(name => {
+    const dish = dishes.find(d => d.chinese === name)
+    const drink = drinks.find(d => d.chinese === name)
+    if (dish) matchedDishes.push(dish)
+    if (drink) matchedDrinks.push(drink)
+  })
+
+  return { matchedDishes, matchedDrinks }
 }
+
 
 
 
@@ -369,7 +389,7 @@ const matchDishes = (content) => {
 
 /* 单个菜品卡片 */
 .dish-card {
-  background: white;
+  background: #ffcc8e;
   border-radius: 8px;
   padding: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -388,6 +408,38 @@ const matchDishes = (content) => {
 .dish-info text {
   font-size: 14px;
   color: #666;
+  line-height: 1.6;
+}
+
+/* 饮品卡片容器 */
+.drink-cards {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 单个饮品卡片 */
+.drink-card {
+  background: #aaffff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+}
+
+/* 标题样式 */
+.drink-title {
+  font-size: 16px;
+  color: #8D6549;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* 信息项样式 */
+.drink-info text {
+  font-size: 14px;
+  color: #444;
   line-height: 1.6;
 }
 
