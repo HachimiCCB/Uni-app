@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "@dcloudio/uni-automator": "^2.0.2-4050720250324001",
-    // "axios": "^1.9.0",
-    // "openai": "^4.100.0"
+    "@dcloudio/uni-automator": "^2.0.2-4050720250324001"
   }
 }

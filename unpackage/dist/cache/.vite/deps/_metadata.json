@@ -1,25 +1,8 @@
 {
-  "hash": "042cf7d9",
-  "configHash": "a8458bbf",
-  "lockfileHash": "0b00773d",
-  "browserHash": "137a9312",
-  "optimized": {
-    "axios": {
-      "src": "../../../../../node_modules/axios/index.js",
-      "file": "axios.js",
-      "fileHash": "456368f0",
-      "needsInterop": false
-    },
-    "openai": {
-      "src": "../../../../../node_modules/openai/index.mjs",
-      "file": "openai.js",
-      "fileHash": "11085611",
-      "needsInterop": false
-    }
-  },
-  "chunks": {
-    "chunk-CSAU5B4Q": {
-      "file": "chunk-CSAU5B4Q.js"
-    }
-  }
+  "hash": "c89b6f1d",
+  "configHash": "adbfef8b",
+  "lockfileHash": "1333fa2c",
+  "browserHash": "73b50384",
+  "optimized": {},
+  "chunks": {}
 }

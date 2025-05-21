@@ -5,27 +5,42 @@
       <uni-icons type="close" size="24" @click="closeChat"></uni-icons>
     </view>
     
-    <scroll-view class="chat-messages" scroll-y="true" :scroll-into-view="'msg-' + (messages.length - 1)">
+    <scroll-view 
+      class="chat-messages" 
+      scroll-y="true" 
+      :scroll-into-view="'msg-' + (messages.length - 1)"
+      :scroll-with-animation="true"
+    >
       <view 
         v-for="(msg, index) in messages" 
         :id="'msg-' + index"
         :key="index" 
-        :class="['message', msg.role]"
+        :class="['message-bubble', msg.role]"
       >
-        {{ msg.content }}
+        <view class="message-content">{{ msg.content }}</view>
+        <view class="message-time">{{ formatTime(msg.timestamp) }}</view>
       </view>
     </scroll-view>
     
-    <view class="chat-input">
+    <view class="chat-input-area">
       <uv-input 
         v-model="inputText" 
         placeholder="输入消息..." 
         border="none" 
         bgColor="#fbefcb"
         :disabled="isLoading"
+        class="chat-input"
       ></uv-input>
-      <button @click="sendMessage" :disabled="isLoading">
-        {{ isLoading ? '生成中...' : '发送' }}
+      <button 
+        @click="sendMessage" 
+        :disabled="isLoading || !inputText.trim()"
+        class="send-button"
+      >
+        <uni-icons 
+          :type="isLoading ? 'spinner-cycle' : 'paperplane'" 
+          size="20" 
+          :color="isLoading || !inputText.trim() ? '#aaa' : '#fff'"
+        ></uni-icons>
       </button>
     </view>
   </view>
@@ -37,23 +52,43 @@ import { onLoad } from '@dcloudio/uni-app'
 import { nextTick } from 'vue'
 
 const apiConfig = {
-  apiKey: 'sk-1cbc18b0ce0148af9fa8c54081281f55', // 替换为你的实际API Key
+  apiKey: 'sk-1cbc18b0ce0148af9fa8c54081281f55',
   apiUrl: 'https://dashscope.aliyuncs.com/api/v1/apps/b3a64cafe994432d9e5993d03c104755/completion'
 }
 
 const messages = ref([
-  { role: 'assistant', content: '您好！我是东方夜雀食堂AI助手，如果您对游戏中的料理、人物、玩法感兴趣，请尽管问我~' }
+  { 
+    role: 'assistant', 
+    content: '您好！我是东方夜雀食堂AI助手，如果您对游戏中的料理、人物、玩法感兴趣，请尽管问我~',
+    timestamp: new Date()
+  }
 ])
 const inputText = ref('')
 const isLoading = ref(false)
 
+const formatTime = (date) => {
+  if (!date) return ''
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  return `${hours}:${minutes}`
+}
+
 const sendMessage = async () => {
   if (!inputText.value.trim() || isLoading.value) return
 
-  const userMessage = inputText.value.trim()
-  messages.value.push({ role: 'user', content: userMessage })
+  const userMessage = {
+    role: 'user',
+    content: inputText.value.trim(),
+    timestamp: new Date()
+  }
+  messages.value.push(userMessage)
 
-  const assistantMessage = reactive({ role: 'assistant', content: '', loading: true })
+  const assistantMessage = reactive({ 
+    role: 'assistant', 
+    content: '', 
+    loading: true,
+    timestamp: new Date()
+  })
   messages.value.push(assistantMessage)
 
   inputText.value = ''
@@ -68,7 +103,7 @@ const sendMessage = async () => {
         'X-DashScope-SSE': 'enable'
       },
       body: JSON.stringify({
-        input: { prompt: userMessage },
+        input: { prompt: userMessage.content },
         parameters: { incremental_output: true },
         debug: {}
       })
@@ -97,7 +132,7 @@ const sendMessage = async () => {
                 for (const char of text) {
                   assistantMessage.content += char
                   await nextTick()
-                  await new Promise(resolve => setTimeout(resolve, 20)) // 每字间隔20ms
+                  await new Promise(resolve => setTimeout(resolve, 20))
                 }
               }
             } catch (e) {
@@ -107,7 +142,10 @@ const sendMessage = async () => {
         }
       }
       await nextTick()
-      uni.pageScrollTo({ selector: `#msg-${messages.value.length - 1}`, duration: 300 })
+      uni.pageScrollTo({ 
+        selector: `#msg-${messages.value.length - 1}`, 
+        duration: 300 
+      })
     }
 
   } catch (err) {
@@ -116,9 +154,9 @@ const sendMessage = async () => {
   } finally {
     isLoading.value = false
     assistantMessage.loading = false
+    assistantMessage.timestamp = new Date()
   }
 }
-
 
 const closeChat = () => {
   uni.redirectTo({
@@ -132,64 +170,149 @@ const closeChat = () => {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f8f3ee;
+  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .chat-header {
-  padding: 20rpx;
-  background-color: #8D6549;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #8D6549, #B38B6D);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.chat-header text {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .chat-messages {
   flex: 1;
-  padding: 20rpx;
-  overflow-anchor: auto;
+  padding: 16px 12px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
 }
 
-.message {
-  max-width: 70%;
-  margin-bottom: 20rpx;
-  padding: 15rpx 20rpx;
-  border-radius: 10rpx;
+.message-bubble {
+  max-width: 80%;
+  margin-bottom: 16px;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.message-content {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.5;
   word-break: break-word;
-  animation: fadeIn 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-.user {
-  background-color: #d4aa76;
+.message-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.user .message-content {
+  background: linear-gradient(135deg, #8D6549, #B38B6D);
+  color: white;
+  border-bottom-right-radius: 4px;
   margin-left: auto;
 }
 
-.assistant {
-  background-color: #fbefcb;
+.assistant .message-content {
+  background: white;
+  color: #333;
+  border-bottom-left-radius: 4px;
   margin-right: auto;
+  border: 1px solid #eee;
+}
+
+.user .message-time {
+  text-align: right;
+  padding-right: 8px;
+}
+
+.assistant .message-time {
+  text-align: left;
+  padding-left: 8px;
+}
+
+.chat-input-area {
+  padding: 20rpx;
+    display: flex;
+    gap: 10rpx;
+    background-color: white;
+    border-top: 1rpx solid #eee;
+    box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
 }
 
 .chat-input {
-  padding: 20rpx;
-  display: flex;
-  gap: 10rpx;
+  flex: 1;
   background-color: white;
-  border-top: 1rpx solid #eee;
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-size: 16px;
 }
 
-button {
-  background-color: #8D6549;
-  color: white;
-  padding: 0 30rpx;
-  border-radius: 8rpx;
+.send-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8D6549, #8D6549);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
 }
 
-button:disabled {
-  opacity: 0.7;
+.send-button:active {
+  transform: scale(0.95);
+}
+
+.send-button:disabled {
+  background: #ddd;
+  transform: none;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4aa76;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8D6549;
 }
 </style>
