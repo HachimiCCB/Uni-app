@@ -74,15 +74,37 @@ onShow(() => {
 onPullDownRefresh(() => {
   console.log('触发下拉刷新');
   const udb = getCurrentInstance().refs.udb;
+  let refreshDone = false;
+
+  // 设置 5 秒超时强制结束刷新动画
+  const timeoutId = setTimeout(() => {
+    if (!refreshDone) {
+      console.warn('刷新超时，强制结束下拉动画');
+      uni.stopPullDownRefresh();
+    }
+  }, 1000);
+
   if (udb) {
     udb.loadData({
-      clear: true
+      clear: true,
+      success() {
+        refreshDone = true;
+        clearTimeout(timeoutId);
+        uni.stopPullDownRefresh(); // 正常加载完成后结束动画
+      },
+      fail() {
+        refreshDone = true;
+        clearTimeout(timeoutId);
+        uni.stopPullDownRefresh(); // 加载失败也结束动画
+      }
     });
+  } else {
+    refreshDone = true;
+    clearTimeout(timeoutId);
+    uni.stopPullDownRefresh();
   }
-  setTimeout(() => {
-    uni.stopPullDownRefresh(); // 结束下拉动画
-  }, 800); // 可根据网络情况调整
 });
+
 
 </script>
 
@@ -98,6 +120,7 @@ onPullDownRefresh(() => {
 }
 
 .article-card {
+  position: relative;
   background-color: #d4aa76;
   border: 2px solid rgb(165, 115, 66);
   border-radius: 20rpx;
@@ -112,8 +135,8 @@ onPullDownRefresh(() => {
 
 .article-tags {
   position: absolute;
-  top: 40rpx;
-  right: 40rpx;
+  top: 10rpx;
+  right: 10rpx;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -133,7 +156,6 @@ onPullDownRefresh(() => {
   text-align: center;
   line-height: 1.4;
 }
-
 
 
 .cover-image {
@@ -195,6 +217,7 @@ onPullDownRefresh(() => {
 	left: 0;
 	right: 0;
 	padding: 0rpx 40rpx;
+	z-index: 3;
 }
 
 .comment-footer .submit-btn {

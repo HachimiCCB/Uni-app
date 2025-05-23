@@ -1,84 +1,91 @@
 {
-  "bsonType": "object",
-  "required": ["title", "author", "content"],
-  "permission": {
-    "read": true,
-    "create": true,
-    "update": true,
-    "delete": true
-  },
-  "properties": {
-    "_id": {
-      "description": "ID，系统自动生成"
-    },
-    "title": {
-      "bsonType": "string",
-      "description": "文章标题"
-    },
-    "author": {
-      "bsonType": "string",
-      "description": "作者名称"
-    },
-    "content": {
-      "bsonType": "string",
-      "description": "文章 HTML 或 Markdown 内容"
-    },
-    "coverImage": {
-      "bsonType": "string",
-      "description": "封面图 URL"
-    },
-    "summary": {
-      "bsonType": "string",
-      "description": "文章摘要"
-    },
-    "tags": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "string"
-      },
-      "description": "标签列表"
-    },
-    "publishDate": {
-      "bsonType": "date",
-      "description": "发布时间"
-    },
-    "lastUpdated": {
-      "bsonType": "date",
-      "description": "最后更新时间"
-    },
-    "isPublished": {
-      "bsonType": "bool",
-      "description": "是否已发布"
-    },
-    "views": {
-      "bsonType": "int",
-      "description": "浏览量"
-    },
-    "likes": {
-      "bsonType": "int",
-      "description": "点赞数"
-    },
-    "comments": {
-      "bsonType": "array",
-      "items": {
-        "bsonType": "object",
-        "required": ["user", "comment", "date"],
-        "properties": {
-          "user": {
-            "bsonType": "string",
-            "description": "评论用户"
-          },
-          "comment": {
-            "bsonType": "string",
-            "description": "评论内容"
-          },
-          "date": {
-            "bsonType": "date",
-            "description": "评论时间"
-          }
-        }
-      },
-      "description": "评论列表"
-    }
-  }
+	"bsonType": "object",
+	"required": ["title", "author", "content"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "文章标题"
+		},
+		"author": {
+			"bsonType": "string",
+			"description": "作者名称"
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "文章 HTML 或 Markdown 内容"
+		},
+		"coverImage": {
+			"bsonType": "string",
+			"description": "封面图 URL"
+		},
+		"images": {
+			"bsonType": "array",
+			"items": {
+				"bsonType": "string"
+			},
+			"description": "文章中图片URL"
+		},
+		"summary": {
+			"bsonType": "string",
+			"description": "文章摘要"
+		},
+		"tags": {
+			"bsonType": "array",
+			"items": {
+				"bsonType": "string"
+			},
+			"description": "标签列表"
+		},
+		"publishDate": {
+			"bsonType": "date",
+			"description": "发布时间"
+		},
+		"lastUpdated": {
+			"bsonType": "date",
+			"description": "最后更新时间"
+		},
+		"isPublished": {
+			"bsonType": "bool",
+			"description": "是否已发布"
+		},
+		"views": {
+			"bsonType": "int",
+			"description": "浏览量"
+		},
+		"likes": {
+			"bsonType": "int",
+			"description": "点赞数"
+		},
+		"comments": {
+			"bsonType": "array",
+			"items": {
+				"bsonType": "object",
+				"required": ["user", "comment", "date"],
+				"properties": {
+					"user": {
+						"bsonType": "string",
+						"description": "评论用户"
+					},
+					"comment": {
+						"bsonType": "string",
+						"description": "评论内容"
+					},
+					"date": {
+						"bsonType": "date",
+						"description": "评论时间"
+					}
+				}
+			},
+			"description": "评论列表"
+		}
+	}
 }
