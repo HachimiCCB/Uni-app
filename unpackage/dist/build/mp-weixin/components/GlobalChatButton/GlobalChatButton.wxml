@@ -1,1 +1,0 @@
-<view class="global-chat-button data-v-0de82a99" bindtap="{{b}}"><uni-icons wx:if="{{a}}" class="data-v-0de82a99" u-i="0de82a99-0" bind:__l="__l" u-p="{{a}}"></uni-icons></view>

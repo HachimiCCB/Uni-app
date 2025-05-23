@@ -1,1 +1,0 @@
-"use strict";const t=require("../../common/vendor.js");if(!Array){t.resolveComponent("uni-icons")()}Math;const e={__name:"GlobalChatButton",setup(e){const o=()=>{t.index.navigateTo({url:"/pages/ChatAssistant"})};return(e,n)=>({a:t.p({type:"chat",size:"25",color:"#8D6549"}),b:t.o(o)})}},o=t._export_sfc(e,[["__scopeId","data-v-0de82a99"]]);wx.createComponent(o);

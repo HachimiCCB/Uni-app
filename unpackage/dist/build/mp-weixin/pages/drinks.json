@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "东方夜雀食谱",
-  "backgroundColor": "#8D6549",
-  "usingComponents": {
-    "global-chat-button": "../components/GlobalChatButton/GlobalChatButton",
-    "tab-bar": "../components/tab-bar/tabBar",
-    "cook-view": "../components/cookView"
-  }
-}

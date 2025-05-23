@@ -1,9 +1,0 @@
-{
-  "backgroundColor": "#8D6549",
-  "usingComponents": {
-    "uv-tabs": "../uni_modules/uv-tabs/components/uv-tabs/uv-tabs",
-    "uv-empty": "../uni_modules/uv-empty/components/uv-empty/uv-empty",
-    "uv-rate": "../uni_modules/uv-rate/components/uv-rate/uv-rate",
-    "cook-bar": "../components/cookBar"
-  }
-}
