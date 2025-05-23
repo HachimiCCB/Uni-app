@@ -123,13 +123,13 @@
 	}
 
 	const submitArticle = async () => {
-		
-		// 处理简介，如果为空则取文章前两行
-		let finalSummary = summary.value.trim()
-		if (!finalSummary) {
-		  const lines = content.value.split('\n').filter(l => l.trim())
-		  finalSummary = lines.slice(0, 2).join(' ')
-		}
+	  // 处理简介，如果为空则取文章前两行
+	  let finalSummary = summary.value.trim()
+	  if (!finalSummary) {
+	    const lines = content.value.split('\n').filter(l => l.trim())
+	    finalSummary = lines.slice(0, 2).join(' ')
+	  }
+	  
 	  if (!content.value.trim()) {
 	    uni.showToast({ title: '请输入文章内容', icon: 'none' });
 	    return;
@@ -149,30 +149,38 @@
 	      })
 	    );
 	
-	    // 2. 提交数据到数据库（包含云端图片路径）
+	    // 2. 提交数据到数据库（包含所有图片路径）
 	    await db.collection('article').add({
 	      title: title.value,
 	      author: userInfo.username,
 	      content: content.value,
-		  summary: finalSummary,
-	      coverImage: uploadedImages[0], // 使用云端fileID数组
-		  publishDate: new Date(),
-		  lastUpdated: new Date(),
-		  tags: tags.value,
+	      summary: finalSummary,
+	      coverImage: uploadedImages[0], // 第一张作为封面
+	      images: uploadedImages, // 保存所有图片
+	      publishDate: new Date(),
+	      lastUpdated: new Date(),
+	      tags: tags.value,
 	    });
 	
 	    // 3. 清空表单并跳转
 	    uni.hideLoading();
 	    uni.showToast({ title: '提交成功', icon: 'success' });
-		title.value = '';
-		summary.value = '';
-		tags.value = '';
+	    title.value = '';
+	    summary.value = '';
+	    tags.value = [];
 	    content.value = '';
 	    images.value = [];
+	    
+	    // 可选：跳转到文章列表页
+	    // uni.navigateBack();
+	    
 	  } catch (err) {
 	    uni.hideLoading();
 	    uni.showToast({ title: '提交失败，请重试', icon: 'none' });
 	    console.error('提交错误:', err);
+	    
+	    // 可选：保留已填写内容以便用户修改后重新提交
+	    // 不自动清空表单字段
 	  }
 	};
 

@@ -16,7 +16,24 @@
           <text class="author">作者：{{ data.author }}</text>
           <text class="date">{{ formatDate(data.publishDate) }}</text>
         </view>
+        
+        <!-- 封面图 -->
         <image v-if="data.coverImage" :src="data.coverImage" class="cover-image" mode="widthFix" />
+        
+        <!-- 文章内容图片展示区域 -->
+        <view class="article-images" v-if="data.images && data.images.length">
+          <view class="image-grid">
+            <view 
+              class="image-item" 
+              v-for="(img, index) in data.images" 
+              :key="index" 
+              @click="previewImage(index, data.images)"
+            >
+              <image :src="img" class="content-image" mode="aspectFill" />
+            </view>
+          </view>
+        </view>
+        
         <view class="article-content">
           <rich-text :nodes="data.content"></rich-text>
         </view>
@@ -27,7 +44,7 @@
     </unicloud-db>
 
     <!-- 底部导航栏 -->
-<!--    <tab-bar :selected="0"></tab-bar> -->
+    <!-- <tab-bar :selected="0"></tab-bar> -->
   </view>
 </template>
 
@@ -37,13 +54,22 @@ import { onLoad } from '@dcloudio/uni-app';
 import tabBar from '@/components/tab-bar/tabBar.vue';
 
 const articleCollection = 'article';
-const articleFields = '_id, title, author, content, coverImage, tags, publishDate';
+// 添加images字段到查询字段中
+const articleFields = '_id, title, author, content, coverImage, images, tags, publishDate';
 
 const articleWhere = ref({});
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
+
+// 图片预览方法
+const previewImage = (current, urls) => {
+  uni.previewImage({
+    current,
+    urls
+  });
 };
 
 onLoad((options) => {
@@ -61,7 +87,7 @@ onLoad((options) => {
 <style lang="scss">
 .article-container {
   padding: 30rpx;
-   background-color: #f5e8d0;
+  background-color: #f5e8d0;
 
   .loading-text, .error-text {
     text-align: center;
@@ -90,22 +116,59 @@ onLoad((options) => {
     margin: 20rpx 0;
   }
 
+  /* 新增图片展示区域样式 */
+  .article-images {
+    margin: 20rpx 0;
+    
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20rpx;
+      
+      .image-item {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%;
+        border-radius: 12rpx;
+        overflow: hidden;
+        
+        .content-image {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+
   .article-content {
     font-size: 30rpx;
     line-height: 1.6;
-	white-space: pre-line;
+    white-space: pre-line;
     color: #444;
+    
+    /* 确保富文本中的图片也能正常显示 */
+    img {
+      max-width: 100%;
+      border-radius: 8rpx;
+      margin: 20rpx 0;
+    }
   }
 
   .article-tags {
     margin-top: 30rpx;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10rpx;
 
     .tag {
       display: inline-block;
       background-color: #eee;
       padding: 10rpx 20rpx;
       border-radius: 30rpx;
-      margin-right: 20rpx;
       font-size: 24rpx;
       color: #666;
     }
