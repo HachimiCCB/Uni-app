@@ -7,6 +7,16 @@
             <image :src="'/static/img/npc/' + npc.name + '.png'" style="width: 100px; height: 130px;margin-right: 10px;" mode="scaleToFill" lazy-load="true"/>
             <view class="tag-div">
                 <view style="margin: 0px;font-weight: bold;font-size: 20px;">{{ npc.chinese }}</view>
+				<view style="display: flex; flex-wrap: wrap; margin: 5px 0;">
+				  <view v-for="item in npc.tag.split(',')" :key="item" class="touhou-tag" style="margin-right: 5px;">
+				    {{ item.trim() }}
+				  </view>
+				</view>
+				<view style="display: flex; flex-wrap: wrap; margin-bottom: 5px;">
+				  <view v-for="item in npc.drinks.split(',')" :key="item" class="drink-tag" style="margin-right: 5px;">
+				    {{ item.trim() }}
+				  </view>
+				</view>
                 <view>持有: {{ npc.money }} 円</view> 
 					<!-- 待修改 -->
                 <view class="tag-div-location">出没地区: {{ npc.location }}</view>
@@ -114,7 +124,7 @@
                                 </view>
                                 <view class="npc-item-tab-div-friend-item-view">
                                     <view class="left">{{ item.name === '5' ? '最终奖励：' : '升级任务：'}}</view>
-                                    <view class="right">{{ item.task }}</view>
+                                    <view class="right" v-html="formatBoldText(item.task)"></view>
                                 </view>
                             </view>
                         </view>
@@ -244,6 +254,11 @@
 	    setTimeout(() => {
 	        cookShow.value = cooks.value
 	    }, 100)
+	}
+	
+	const formatBoldText = (text) => {
+	    if (!text) return ''
+	    return text.replace(/「(.*?)」/g, '<b>「$1」</b>')
 	}
 </script>
 
