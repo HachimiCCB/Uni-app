@@ -1,15 +1,105 @@
 {
-	"bsonType": "object",
-	"required": [],
-	"permission": {
-		"read": true,
-		"create": true,
-		"update": true,
-		"delete": true
-	},
-	"properties": {
-		"_id": {
-			"description": "ID，系统自动生成"
-		}
-	}
+  "bsonType": "object",
+  "required": ["name", "chinese", "tag", "noTag", "drinks", "money", "recommendCooks", "recommendDrinks", "rewardCard", "punishCard", "friendship", "location"],
+  "permission": {
+    "read": true,
+    "create": true,
+    "update": true,
+    "delete": true
+  },
+  "properties": {
+    "_id": {
+      "description": "ID，系统自动生成"
+    },
+    "name": {
+      "bsonType": "string",
+      "description": "英文名称，唯一标识"
+    },
+    "chinese": {
+      "bsonType": "string",
+      "description": "中文名"
+    },
+    "info": {
+      "bsonType": "string",
+      "description": "角色简介"
+    },
+    "tag": {
+      "bsonType": "string",
+      "description": "喜好标签，逗号分隔"
+    },
+    "noTag": {
+      "bsonType": "string",
+      "description": "不喜好标签，逗号分隔"
+    },
+    "drinks": {
+      "bsonType": "string",
+      "description": "喜欢的饮品风格"
+    },
+    "money": {
+      "bsonType": "string",
+      "description": "可接受的消费区间"
+    },
+    "recommendCooks": {
+      "bsonType": "string",
+      "description": "推荐菜品，逗号分隔"
+    },
+    "recommendDrinks": {
+      "bsonType": "string",
+      "description": "推荐饮品，逗号分隔"
+    },
+    "rewardCard": {
+      "bsonType": "object",
+      "required": ["name", "effect"],
+      "properties": {
+        "name": {
+          "bsonType": "string",
+          "description": "奖励卡牌名称"
+        },
+        "effect": {
+          "bsonType": "string",
+          "description": "奖励卡牌效果"
+        }
+      }
+    },
+    "punishCard": {
+      "bsonType": "object",
+      "required": ["name", "effect"],
+      "properties": {
+        "name": {
+          "bsonType": "string",
+          "description": "惩罚卡牌名称"
+        },
+        "effect": {
+          "bsonType": "string",
+          "description": "惩罚卡牌效果"
+        }
+      }
+    },
+    "friendship": {
+      "bsonType": "array",
+      "description": "角色好感度任务列表",
+      "items": {
+        "bsonType": "object",
+        "required": ["name", "condition", "task"],
+        "properties": {
+          "name": {
+            "bsonType": "string",
+            "description": "好感度等级"
+          },
+          "condition": {
+            "bsonType": "string",
+            "description": "达成条件"
+          },
+          "task": {
+            "bsonType": "string",
+            "description": "具体任务描述"
+          }
+        }
+      }
+    },
+    "location": {
+      "bsonType": "string",
+      "description": "可遇见地点，逗号分隔"
+    }
+  }
 }

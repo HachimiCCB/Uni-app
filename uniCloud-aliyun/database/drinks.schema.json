@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [],
+	"required": ["name", "chinese", "tag", "level", "money"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -10,6 +10,26 @@
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "英文名称，唯一标识"
+		},
+		"chinese": {
+			"bsonType": "string",
+			"description": "中文名称"
+		},
+		"tag": {
+			"bsonType": "string",
+			"description": "饮品标签，逗号分隔"
+		},
+		"level": {
+			"bsonType": "string",
+			"description": "解锁等级"
+		},
+		"money": {
+			"bsonType": "string",
+			"description": "售价"
 		}
 	}
 }

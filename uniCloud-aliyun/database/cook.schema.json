@@ -1,6 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [],
+	"required": ["name", "chinese", "cooker", "tag", "material", "time", "level", "money", "from"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -10,6 +10,46 @@
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "英文名称，唯一标识"
+		},
+		"chinese": {
+			"bsonType": "string",
+			"description": "菜名中文名"
+		},
+		"cooker": {
+			"bsonType": "string",
+			"description": "使用的厨具"
+		},
+		"tag": {
+			"bsonType": "string",
+			"description": "菜品标签，逗号分隔"
+		},
+		"withNo": {
+			"bsonType": "string",
+			"description": "不搭配的属性"
+		},
+		"material": {
+			"bsonType": "string",
+			"description": "食材，逗号分隔"
+		},
+		"time": {
+			"bsonType": "string",
+			"description": "烹饪时间（秒）"
+		},
+		"level": {
+			"bsonType": "string",
+			"description": "解锁等级"
+		},
+		"money": {
+			"bsonType": "string",
+			"description": "售卖价格"
+		},
+		"from": {
+			"bsonType": "string",
+			"description": "获取方式或来源"
 		}
 	}
 }

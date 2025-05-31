@@ -10,6 +10,12 @@
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"type": {
+			"description": "类型，对应料理和饮品"
+		},
+		"tag": {
+			"description": "属性标签"
 		}
 	}
 }
